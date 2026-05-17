@@ -704,6 +704,47 @@
       display: block; line-height: 1;
     }
 
+    /* ── STEAM ── */
+    .steam-wrap {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 24px;
+    }
+
+    .steam-wrap .cta-ornament {
+      margin-bottom: 0;
+      display: block;
+    }
+
+    .steam-wisp {
+      position: absolute;
+      bottom: 78%;
+      width: 5px;
+      height: 0;
+      border-radius: 50% 50% 20% 20%;
+      background: linear-gradient(to top,
+        rgba(176,38,255,0.55),
+        rgba(213,128,255,0.30),
+        transparent
+      );
+      animation: steam-rise 2.6s ease-out infinite;
+      transform-origin: bottom center;
+      pointer-events: none;
+    }
+
+    .steam-wisp:nth-child(1) { left: calc(50% - 14px); animation-delay: 0s;    animation-duration: 2.6s; }
+    .steam-wisp:nth-child(2) { left: calc(50% - 2px);  animation-delay: 0.85s; animation-duration: 2.9s; width: 4px; }
+    .steam-wisp:nth-child(3) { left: calc(50% + 10px); animation-delay: 1.7s;  animation-duration: 2.4s; width: 4px; }
+
+    @keyframes steam-rise {
+      0%   { height: 0px;  opacity: 0;    transform: translateX(0px)   scaleX(1.0); }
+      10%  { height: 10px; opacity: 0.65; transform: translateX(0px)   scaleX(1.0); }
+      35%  { height: 36px; opacity: 0.50; transform: translateX(7px)   scaleX(0.75); }
+      60%  { height: 58px; opacity: 0.30; transform: translateX(-5px)  scaleX(0.55); }
+      85%  { height: 76px; opacity: 0.12; transform: translateX(4px)   scaleX(0.38); }
+      100% { height: 88px; opacity: 0;    transform: translateX(-2px)  scaleX(0.25); }
+    }
+
     #final-cta h2 { max-width: 620px; margin: 0 auto 16px; }
 
     .cta-tagline {
@@ -1065,7 +1106,12 @@
   <!-- FINAL CTA -->
   <section id="final-cta">
     <div class="inner" style="position:relative; z-index:1;">
-      <span class="cta-ornament fade-up">☕</span>
+      <div class="steam-wrap fade-up">
+        <span class="steam-wisp"></span>
+        <span class="steam-wisp"></span>
+        <span class="steam-wisp"></span>
+        <span class="cta-ornament">☕</span>
+      </div>
       <span class="section-label fade-up" data-i18n="cta_label">Begin Your Ritual</span>
       <h2 class="fade-up" data-i18n="cta_h2">The cup is ready.<br>Are you?</h2>
       <p class="cta-tagline fade-up" data-i18n="cta_tagline">"Your fortune, written in coffee grounds."</p>
