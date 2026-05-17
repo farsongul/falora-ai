@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,7 +10,6 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── DARK MODE (default) ── */
     :root {
       --bg:         #080610;
       --bg2:        #0d0a20;
@@ -28,22 +27,6 @@
       --max:        1100px;
     }
 
-    /* ── LIGHT MODE ── */
-    [data-theme="light"] {
-      --bg:         #ffffff;
-      --bg2:        #f0ecff;
-      --bg3:        #e2daff;
-      --accent:     #7c3aed;
-      --accent-lt:  #5b21b6;
-      --accent-dim: #a78bfa;
-      --mid-blue:   #1e1b4b;
-      --text:       #0a0a0f;
-      --text-dim:   #3a3550;
-      --border:     rgba(124,58,237,0.28);
-      --nav-bg:     rgba(255,255,255,0.95);
-      --card-bg:    #ffffff;
-    }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -53,7 +36,6 @@
       font-size: 16px;
       line-height: 1.7;
       overflow-x: hidden;
-      transition: background 0.35s ease, color 0.35s ease;
     }
 
     /* ── NAV ── */
@@ -69,7 +51,6 @@
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
       gap: 24px;
-      transition: background 0.35s ease, border-color 0.35s ease;
     }
 
     .nav-logo {
@@ -102,59 +83,36 @@
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
 
-    /* ── THEME TOGGLE ── */
-    .theme-toggle {
+    /* ── LANGUAGE TOGGLE ── */
+    .lang-toggle {
       display: flex;
       align-items: center;
-      gap: 9px;
+      background: rgba(176,38,255,0.08);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .lang-btn {
       background: none;
-      border: 1px solid var(--border);
-      border-radius: 30px;
-      padding: 6px 14px 6px 8px;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .theme-toggle:hover { border-color: var(--accent); background: rgba(147,51,234,0.08); }
-
-    .toggle-track {
-      width: 36px;
-      height: 20px;
-      background: var(--bg3);
-      border-radius: 20px;
-      position: relative;
-      transition: background 0.3s;
-      flex-shrink: 0;
-      border: 1px solid var(--border);
-    }
-    [data-theme="light"] .toggle-track { background: var(--accent); }
-
-    .toggle-thumb {
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--accent);
-      transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), background 0.3s;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-    }
-    [data-theme="light"] .toggle-thumb {
-      transform: translateX(16px);
-      background: #fff;
-    }
-
-    .toggle-label {
+      border: none;
+      color: var(--text-dim);
+      font-family: 'Inter', sans-serif;
       font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.08em;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      transition: color 0.2s;
-      user-select: none;
+      padding: 5px 13px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+    }
+    .lang-btn.active {
+      background: var(--accent);
+      color: #fff;
     }
 
     .nav-cta {
@@ -170,7 +128,6 @@
       transition: background 0.2s, transform 0.15s;
     }
     .nav-cta:hover { background: var(--accent-lt); transform: translateY(-1px); }
-    [data-theme="light"] .nav-cta:hover { background: var(--accent-lt); color: #fff; }
 
     .nav-hamburger {
       display: none;
@@ -190,7 +147,7 @@
     }
 
     /* ── SHARED ── */
-    section { padding: 112px 48px; transition: background 0.35s ease; }
+    section { padding: 112px 48px; }
     .inner { max-width: var(--max); margin: 0 auto; }
 
     .section-label {
@@ -204,7 +161,6 @@
       padding: 5px 14px;
       border: 1px solid var(--border);
       border-radius: 20px;
-      transition: border-color 0.35s;
     }
 
     h2 {
@@ -215,7 +171,6 @@
       line-height: 1.15;
       margin-bottom: 16px;
       letter-spacing: 0.02em;
-      transition: color 0.35s;
     }
 
     .divider {
@@ -232,8 +187,6 @@
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
-    /* Fallback: ensure content is always visible */
-    .fade-up.revealed { opacity: 1; transform: translateY(0); }
 
     /* ── HERO ── */
     #hero {
@@ -254,18 +207,10 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      transition: opacity 0.35s;
-    }
-    [data-theme="dark"] .hero-bg {
       background:
         radial-gradient(ellipse 65% 55% at 50% 40%, rgba(147,51,234,0.10) 0%, transparent 65%),
         radial-gradient(ellipse 40% 50% at 15% 80%, rgba(30,27,75,0.5) 0%, transparent 55%),
         radial-gradient(ellipse 50% 40% at 85% 18%, rgba(30,27,75,0.4) 0%, transparent 60%);
-    }
-    [data-theme="light"] .hero-bg {
-      background:
-        radial-gradient(ellipse 65% 55% at 50% 40%, rgba(147,51,234,0.07) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 50% at 15% 80%, rgba(124,58,237,0.04) 0%, transparent 55%);
     }
 
     .stars-field {
@@ -273,10 +218,7 @@
       inset: 0;
       pointer-events: none;
       overflow: hidden;
-      transition: opacity 0.5s;
     }
-    [data-theme="light"] .stars-field { opacity: 0.18; }
-
     .star {
       position: absolute;
       border-radius: 50%;
@@ -315,10 +257,8 @@
       margin-bottom: 24px;
       letter-spacing: 0.03em;
       max-width: 820px;
-      transition: color 0.35s;
     }
     h1 em { font-style: italic; color: var(--accent-lt); }
-    [data-theme="light"] h1 em { color: var(--accent); }
 
     .hero-sub {
       font-size: clamp(0.98rem, 1.8vw, 1.1rem);
@@ -353,7 +293,6 @@
       box-shadow: 0 8px 42px rgba(147,51,234,0.50);
       background: var(--accent-lt);
     }
-    [data-theme="light"] .btn-primary:hover { background: var(--accent-lt); color: #fff; }
 
     .btn-ghost {
       color: var(--text-dim);
@@ -415,7 +354,7 @@
       border-radius: var(--radius);
       padding: 36px 32px;
       position: relative;
-      transition: transform 0.22s, box-shadow 0.22s, background 0.35s, border-color 0.35s;
+      transition: transform 0.22s, box-shadow 0.22s;
     }
     .pain-card:hover {
       transform: translateY(-4px);
@@ -474,12 +413,10 @@
     .benefit-card {
       padding: 48px 38px;
       background: var(--bg2);
-      transition: background 0.22s, border-color 0.35s;
+      transition: background 0.22s;
     }
     .benefit-card:hover { background: var(--bg3); }
     .benefit-card:not(:last-child) { border-right: 1px solid var(--border); }
-
-    .benefit-icon { font-size: 1.8rem; margin-bottom: 22px; display: block; }
 
     .benefit-card h3 {
       font-family: 'Cormorant Garamond', serif;
@@ -516,7 +453,6 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
-      transition: border-color 0.35s;
     }
 
     .stat-item {
@@ -561,7 +497,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 36px 32px;
-      transition: transform 0.22s, border-color 0.22s, background 0.35s;
+      transition: transform 0.22s, border-color 0.22s;
     }
     .testimonial-card:hover { transform: translateY(-4px); border-color: var(--accent); }
 
@@ -600,7 +536,6 @@
       color: var(--accent-lt);
       flex-shrink: 0;
     }
-    [data-theme="light"] .testimonial-avatar { background: var(--bg3); color: var(--accent); }
 
     .testimonial-name { font-size: 0.85rem; font-weight: 500; color: var(--text); margin-bottom: 2px; }
     .testimonial-role { font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.04em; }
@@ -623,16 +558,13 @@
       padding: 44px 32px;
       text-align: left;
       position: relative;
-      transition: transform 0.2s, box-shadow 0.2s, background 0.35s, border-color 0.35s;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
     .pricing-card:hover { transform: translateY(-4px); border-color: var(--accent); }
 
     .pricing-card.featured {
       border-color: var(--accent);
       background: linear-gradient(160deg, rgba(147,51,234,0.1), var(--bg2));
-    }
-    [data-theme="light"] .pricing-card.featured {
-      background: linear-gradient(160deg, rgba(124,58,237,0.07), var(--bg2));
     }
 
     .pricing-badge {
@@ -720,8 +652,6 @@
       box-shadow: 0 4px 18px rgba(147,51,234,0.30);
     }
     .btn-pricing-solid:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(147,51,234,0.45); background: var(--accent-lt); }
-    [data-theme="light"] .btn-pricing-solid:hover { background: var(--accent-lt); color: #fff; }
-
     .btn-pricing-outline { border: 1px solid var(--border); color: var(--text-dim); }
     .btn-pricing-outline:hover { border-color: var(--accent); color: var(--accent); }
 
@@ -750,7 +680,7 @@
     .faq-item.open .faq-icon { transform: rotate(45deg); }
 
     .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
-    .faq-item.open .faq-answer { max-height: 320px; }
+    .faq-item.open .faq-answer { max-height: 400px; }
 
     .faq-answer p {
       font-size: 0.9rem; color: var(--text-dim);
@@ -765,9 +695,6 @@
       position: absolute; inset: 0;
       background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(147,51,234,0.09) 0%, transparent 65%);
       pointer-events: none;
-    }
-    [data-theme="light"] #final-cta::before {
-      background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(124,58,237,0.05) 0%, transparent 65%);
     }
 
     .cta-ornament {
@@ -784,7 +711,6 @@
       font-style: italic; font-size: 1.15rem;
       color: var(--accent-lt); letter-spacing: 0.06em; margin-bottom: 32px;
     }
-    [data-theme="light"] .cta-tagline { color: var(--accent); }
 
     .cta-body {
       color: var(--text-dim);
@@ -792,7 +718,7 @@
       font-size: 0.95rem; font-weight: 300; line-height: 1.8;
     }
 
-    /* ── MIDNIGHT BLUE ACCENT BAND ── */
+    /* ── MIDNIGHT BLUE BAND ── */
     .mid-blue-band {
       background: var(--mid-blue);
       padding: 20px 48px;
@@ -809,7 +735,6 @@
       background: var(--bg2);
       border-top: 1px solid var(--border);
       padding: 44px 48px;
-      transition: background 0.35s, border-color 0.35s;
     }
 
     .footer-inner {
@@ -882,18 +807,18 @@
     <a class="nav-logo" href="#">Falora<span class="dot">.AI</span></a>
 
     <ul class="nav-links" id="nav-links">
-      <li><a href="#problem">Why Falora</a></li>
-      <li><a href="#proof">Stories</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#problem" data-i18n="nav_why">Why Falora</a></li>
+      <li><a href="#proof" data-i18n="nav_stories">Stories</a></li>
+      <li><a href="#pricing" data-i18n="nav_pricing">Pricing</a></li>
+      <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
     </ul>
 
     <div class="nav-right">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
-        <span class="toggle-track"><span class="toggle-thumb"></span></span>
-        <span class="toggle-label" id="toggleLabel">Dark</span>
-      </button>
-      <a class="nav-cta" href="#pricing">Read My Fortune</a>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="lang-en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="lang-tr" onclick="setLang('tr')">TR</button>
+      </div>
+      <a class="nav-cta" href="#pricing" data-i18n="nav_cta">Read My Fortune</a>
     </div>
 
     <button class="nav-hamburger" id="hamburger" aria-label="Menu">
@@ -909,16 +834,16 @@
       <div class="canvas-wrap">
         <canvas id="coffeeCanvas" width="420" height="420"></canvas>
       </div>
-      <p class="hero-eyebrow">Turkish Coffee Fortune · AI Visual Artifacts</p>
-      <h1>Your fortune, written in <em>coffee grounds.</em></h1>
-      <p class="hero-sub">For curious souls who crave ritual — turn your Turkish coffee reading into a personalized art piece you'll actually keep.</p>
+      <p class="hero-eyebrow" data-i18n="hero_eyebrow">Turkish Coffee Fortune · AI Visual Artifacts</p>
+      <h1 data-i18n="hero_h1">Your fortune, written in <em>coffee grounds.</em></h1>
+      <p class="hero-sub" data-i18n="hero_sub">For curious souls who crave ritual — turn your Turkish coffee reading into a personalized art piece you'll actually keep.</p>
       <div class="hero-ctas">
-        <a class="btn-primary" href="#pricing">Read My Fortune</a>
-        <a class="btn-ghost" href="#proof">Explore Group Experiences →</a>
+        <a class="btn-primary" href="#pricing" data-i18n="cta_primary">Read My Fortune</a>
+        <a class="btn-ghost" href="#proof" data-i18n="cta_secondary">Explore Group Experiences →</a>
       </div>
     </div>
     <div class="hero-scroll">
-      <span>Scroll</span>
+      <span data-i18n="scroll">Scroll</span>
       <div class="hero-scroll-line"></div>
     </div>
   </section>
@@ -926,24 +851,24 @@
   <!-- PROBLEM -->
   <section id="problem">
     <div class="inner" style="position:relative; z-index:1;">
-      <span class="section-label fade-up">Sound familiar?</span>
-      <h2 class="fade-up">The moments that disappear.</h2>
+      <span class="section-label fade-up" data-i18n="prob_label">Sound familiar?</span>
+      <h2 class="fade-up" data-i18n="prob_h2">The moments that disappear.</h2>
       <div class="divider fade-up"></div>
       <div class="pain-grid">
         <div class="pain-card fade-up">
           <span class="pain-number">01</span>
-          <h3>You love the ritual. You hate that it disappears.</h3>
-          <p>You've had your coffee read a dozen times — at your grandmother's table, at a friend's gathering, on a trip abroad. It meant something. Then the cup got washed. The moment vanished. Nothing to show for it.</p>
+          <h3 data-i18n="p1_h3">You love the ritual. You hate that it disappears.</h3>
+          <p data-i18n="p1_p">You've had your coffee read a dozen times — at your grandmother's table, at a friend's gathering, on a trip abroad. It meant something. Then the cup got washed. The moment vanished. Nothing to show for it.</p>
         </div>
         <div class="pain-card fade-up">
           <span class="pain-number">02</span>
-          <h3>Group experiences are getting harder to pull off.</h3>
-          <p>Getting people together used to be easy. Now everyone's tired of bars, bored of brunch, staring at their phones even when they're in the same room. You want something that actually makes people present.</p>
+          <h3 data-i18n="p2_h3">Group experiences are getting harder to pull off.</h3>
+          <p data-i18n="p2_p">Getting people together used to be easy. Now everyone's tired of bars, bored of brunch, staring at their phones even when they're in the same room. You want something that actually makes people present.</p>
         </div>
         <div class="pain-card fade-up">
           <span class="pain-number">03</span>
-          <h3>Mass-produced art doesn't feel like you.</h3>
-          <p>You've scrolled Etsy. You've browsed galleries. Everything either looks like everyone else's apartment or costs as much as rent. You want something personal — something that has a story attached to it.</p>
+          <h3 data-i18n="p3_h3">Mass-produced art doesn't feel like you.</h3>
+          <p data-i18n="p3_p">You've scrolled Etsy. You've browsed galleries. Everything either looks like everyone else's apartment or costs as much as rent. You want something personal — something that has a story attached to it.</p>
         </div>
       </div>
     </div>
@@ -952,24 +877,24 @@
   <!-- SOLUTION -->
   <section id="solution">
     <div class="inner" style="position:relative; z-index:1;">
-      <span class="section-label fade-up">What Falora.AI gives you instead.</span>
-      <h2 class="fade-up">The ritual, kept forever.</h2>
+      <span class="section-label fade-up" data-i18n="sol_label">What Falora.AI gives you instead.</span>
+      <h2 class="fade-up" data-i18n="sol_h2">The ritual, kept forever.</h2>
       <div class="divider fade-up"></div>
       <div class="benefit-grid fade-up">
         <div class="benefit-card">
           <span class="benefit-marker"></span>
-          <h3>Keep the moment forever.</h3>
-          <p>Every reading generates a one-of-a-kind visual artifact — yours to print, frame, or share. The ritual lives on. The art starts a conversation.</p>
+          <h3 data-i18n="b1_h3">Keep the moment forever.</h3>
+          <p data-i18n="b1_p">Every reading generates a one-of-a-kind visual artifact — yours to print, frame, or share. The ritual lives on. The art starts a conversation.</p>
         </div>
         <div class="benefit-card">
           <span class="benefit-marker"></span>
-          <h3>An experience everyone actually talks about.</h3>
-          <p>Host a session solo or with your whole group. Falora.AI guides the ritual, delivers personalized fortunes to each person, and turns an ordinary evening into a memory people reference for months.</p>
+          <h3 data-i18n="b2_h3">An experience everyone actually talks about.</h3>
+          <p data-i18n="b2_p">Host a session solo or with your whole group. Falora.AI guides the ritual, delivers personalized fortunes to each person, and turns an ordinary evening into a memory people reference for months.</p>
         </div>
         <div class="benefit-card">
           <span class="benefit-marker"></span>
-          <h3>Art that is genuinely, provably about you.</h3>
-          <p>Your fortune. Your symbols. Your colors. AI-generated visuals built from your reading — not a template, not a filter. Something no one else has.</p>
+          <h3 data-i18n="b3_h3">Art that is genuinely, provably about you.</h3>
+          <p data-i18n="b3_p">Your fortune. Your symbols. Your colors. AI-generated visuals built from your reading — not a template, not a filter. Something no one else has.</p>
         </div>
       </div>
     </div>
@@ -978,54 +903,54 @@
   <!-- SOCIAL PROOF -->
   <section id="proof">
     <div class="inner">
-      <span class="section-label fade-up">What people say.</span>
-      <h2 class="fade-up">Stories from the cup.</h2>
+      <span class="section-label fade-up" data-i18n="proof_label">What people say.</span>
+      <h2 class="fade-up" data-i18n="proof_h2">Stories from the cup.</h2>
       <div class="divider fade-up"></div>
       <div class="stats-banner fade-up">
         <div class="stat-item">
           <div class="stat-number">—</div>
-          <div class="stat-label">Readings completed</div>
+          <div class="stat-label" data-i18n="stat1">Readings completed</div>
         </div>
         <div class="stat-item">
           <div class="stat-number">—</div>
-          <div class="stat-label">Prints ordered</div>
+          <div class="stat-label" data-i18n="stat2">Prints ordered</div>
         </div>
         <div class="stat-item">
           <div class="stat-number">—</div>
-          <div class="stat-label">Countries reached</div>
+          <div class="stat-label" data-i18n="stat3">Countries reached</div>
         </div>
       </div>
       <div class="testimonials-grid">
         <div class="testimonial-card fade-up">
           <span class="testimonial-quote">"</span>
-          <p class="testimonial-text">I did this with eight friends after dinner. Everyone got quiet when their fortune came up — genuinely quiet. Then everyone talked for two hours. I don't know what you did but do not change it.</p>
+          <p class="testimonial-text" data-i18n="t1_text">I did this with eight friends after dinner. Everyone got quiet when their fortune came up — genuinely quiet. Then everyone talked for two hours. I don't know what you did but do not change it.</p>
           <div class="testimonial-author">
             <div class="testimonial-avatar">S</div>
             <div>
               <div class="testimonial-name">[Name]</div>
-              <div class="testimonial-role">Istanbul · New York · London</div>
+              <div class="testimonial-role" data-i18n="t1_role">Istanbul · New York · London</div>
             </div>
           </div>
         </div>
         <div class="testimonial-card fade-up">
           <span class="testimonial-quote">"</span>
-          <p class="testimonial-text">I was skeptical. Then I saw my print. It's hanging in my living room. Three people have asked me where I bought it. I tell them it's mine — it's literally only mine.</p>
+          <p class="testimonial-text" data-i18n="t2_text">I was skeptical. Then I saw my print. It's hanging in my living room. Three people have asked me where I bought it. I tell them it's mine — it's literally only mine.</p>
           <div class="testimonial-author">
             <div class="testimonial-avatar">M</div>
             <div>
               <div class="testimonial-name">[Name]</div>
-              <div class="testimonial-role">The Artifact Keeper</div>
+              <div class="testimonial-role" data-i18n="t2_role">The Artifact Keeper</div>
             </div>
           </div>
         </div>
         <div class="testimonial-card fade-up">
           <span class="testimonial-quote">"</span>
-          <p class="testimonial-text">It felt real. I know it's AI. I know that. But the symbols matched things I hadn't said out loud yet. I've done it four times now.</p>
+          <p class="testimonial-text" data-i18n="t3_text">It felt real. I know it's AI. I know that. But the symbols matched things I hadn't said out loud yet. I've done it four times now.</p>
           <div class="testimonial-author">
             <div class="testimonial-avatar">L</div>
             <div>
               <div class="testimonial-name">[Name]</div>
-              <div class="testimonial-role">The Spiritual Seeker</div>
+              <div class="testimonial-role" data-i18n="t3_role">The Spiritual Seeker</div>
             </div>
           </div>
         </div>
@@ -1035,72 +960,72 @@
 
   <!-- MIDNIGHT BLUE BAND -->
   <div class="mid-blue-band">
-    Turkish coffee fortune-telling — tasseography — practiced for centuries. <span>Now preserved forever.</span>
+    <span data-i18n="band_text">Turkish coffee fortune-telling — tasseography — practiced for centuries. <span>Now preserved forever.</span></span>
   </div>
 
   <!-- PRICING -->
   <section id="pricing">
     <div class="inner">
-      <span class="section-label fade-up">Choose your ritual.</span>
-      <h2 class="fade-up">Simple, honest pricing.</h2>
+      <span class="section-label fade-up" data-i18n="price_label">Choose your ritual.</span>
+      <h2 class="fade-up" data-i18n="price_h2">Simple, honest pricing.</h2>
       <div class="divider fade-up"></div>
       <div class="pricing-grid">
         <div class="pricing-card fade-up">
           <p class="pricing-tier">Fal</p>
-          <h3>The Reading</h3>
-          <p class="pricing-tagline">Your fortune. One session, one artifact, yours to download and print anywhere.</p>
+          <h3 data-i18n="plan1_name">The Reading</h3>
+          <p class="pricing-tagline" data-i18n="plan1_tag">Your fortune. One session, one artifact, yours to download and print anywhere.</p>
           <div class="pricing-price">
             <span class="price-currency">$</span>
             <span class="price-amount">12</span>
-            <span class="price-note">/ session</span>
+            <span class="price-note" data-i18n="per_session">/ session</span>
           </div>
           <hr class="pricing-divider" />
           <ul class="pricing-features">
-            <li>Personalized AI fortune reading</li>
-            <li>One unique digital artifact</li>
-            <li>High-res download (print-ready)</li>
-            <li>Instant delivery</li>
+            <li data-i18n="f1_1">Personalized AI fortune reading</li>
+            <li data-i18n="f1_2">One unique digital artifact</li>
+            <li data-i18n="f1_3">High-res download (print-ready)</li>
+            <li data-i18n="f1_4">Instant delivery</li>
           </ul>
-          <a class="btn-pricing btn-pricing-outline" href="#">Begin Reading</a>
+          <a class="btn-pricing btn-pricing-outline" href="#" data-i18n="btn1">Begin Reading</a>
         </div>
         <div class="pricing-card featured fade-up">
-          <div class="pricing-badge">Most Popular</div>
+          <div class="pricing-badge" data-i18n="badge">Most Popular</div>
           <p class="pricing-tier">Sohbet</p>
-          <h3>The Gathering</h3>
-          <p class="pricing-tagline">For groups of up to 6. Everyone gets their own reading and artifact — perfect for a dinner party, birthday, or date night.</p>
+          <h3 data-i18n="plan2_name">The Gathering</h3>
+          <p class="pricing-tagline" data-i18n="plan2_tag">For groups of up to 6. Everyone gets their own reading and artifact — perfect for a dinner party, birthday, or date night.</p>
           <div class="pricing-price">
             <span class="price-currency">$</span>
             <span class="price-amount">42</span>
-            <span class="price-note">/ group</span>
+            <span class="price-note" data-i18n="per_group">/ group</span>
           </div>
           <hr class="pricing-divider" />
           <ul class="pricing-features">
-            <li>Up to 6 individual readings</li>
-            <li>6 unique digital artifacts</li>
-            <li>Guided group ritual flow</li>
-            <li>Shared gallery to compare fortunes</li>
-            <li>Host mode included</li>
+            <li data-i18n="f2_1">Up to 6 individual readings</li>
+            <li data-i18n="f2_2">6 unique digital artifacts</li>
+            <li data-i18n="f2_3">Guided group ritual flow</li>
+            <li data-i18n="f2_4">Shared gallery to compare fortunes</li>
+            <li data-i18n="f2_5">Host mode included</li>
           </ul>
-          <a class="btn-pricing btn-pricing-solid" href="#">Host a Gathering</a>
+          <a class="btn-pricing btn-pricing-solid" href="#" data-i18n="btn2">Host a Gathering</a>
         </div>
         <div class="pricing-card fade-up">
           <p class="pricing-tier">Hatıra</p>
-          <h3>The Keepsake</h3>
-          <p class="pricing-tagline">Your reading, your artifact, delivered to your door. Premium print on archival paper, ready to frame.</p>
+          <h3 data-i18n="plan3_name">The Keepsake</h3>
+          <p class="pricing-tagline" data-i18n="plan3_tag">Your reading, your artifact, delivered to your door. Premium print on archival paper, ready to frame.</p>
           <div class="pricing-price">
             <span class="price-currency">$</span>
             <span class="price-amount">74</span>
-            <span class="price-note">/ session + print</span>
+            <span class="price-note" data-i18n="per_print">/ session + print</span>
           </div>
           <hr class="pricing-divider" />
           <ul class="pricing-features">
-            <li>Full personalized reading</li>
-            <li>Museum-quality archival print</li>
-            <li>Ships in premium packaging</li>
-            <li>Certificate of uniqueness</li>
-            <li>Free digital copy included</li>
+            <li data-i18n="f3_1">Full personalized reading</li>
+            <li data-i18n="f3_2">Museum-quality archival print</li>
+            <li data-i18n="f3_3">Ships in premium packaging</li>
+            <li data-i18n="f3_4">Certificate of uniqueness</li>
+            <li data-i18n="f3_5">Free digital copy included</li>
           </ul>
-          <a class="btn-pricing btn-pricing-outline" href="#">Order a Keepsake</a>
+          <a class="btn-pricing btn-pricing-outline" href="#" data-i18n="btn3">Order a Keepsake</a>
         </div>
       </div>
     </div>
@@ -1109,29 +1034,29 @@
   <!-- FAQ -->
   <section id="faq">
     <div class="inner">
-      <span class="section-label fade-up">Questions before you begin.</span>
-      <h2 class="fade-up">Everything you're wondering.</h2>
+      <span class="section-label fade-up" data-i18n="faq_label">Questions before you begin.</span>
+      <h2 class="fade-up" data-i18n="faq_h2">Everything you're wondering.</h2>
       <div class="divider fade-up"></div>
       <div class="faq-list fade-up">
         <div class="faq-item">
-          <button class="faq-question">Do I need to know anything about Turkish coffee or fortune-telling?<span class="faq-icon">+</span></button>
-          <div class="faq-answer"><p>Not a thing. Falora.AI walks you through the ritual step by step — whether it's your first time or your hundredth. All you need is curiosity (and ideally, a cup of coffee).</p></div>
+          <button class="faq-question"><span data-i18n="q1">Do I need to know anything about Turkish coffee or fortune-telling?</span><span class="faq-icon">+</span></button>
+          <div class="faq-answer"><p data-i18n="a1">Not a thing. Falora.AI walks you through the ritual step by step — whether it's your first time or your hundredth. All you need is curiosity (and ideally, a cup of coffee).</p></div>
         </div>
         <div class="faq-item">
-          <button class="faq-question">Is this just a novelty, or is there real cultural grounding here?<span class="faq-icon">+</span></button>
-          <div class="faq-answer"><p>Turkish coffee fortune-telling — tasseography — has been practiced for centuries across the Middle East, the Balkans, and Central Asia. Falora.AI is built with that tradition in mind. The AI doesn't make things up randomly; it draws on symbolic interpretation that has real cultural and historical roots.</p></div>
+          <button class="faq-question"><span data-i18n="q2">Is this just a novelty, or is there real cultural grounding here?</span><span class="faq-icon">+</span></button>
+          <div class="faq-answer"><p data-i18n="a2">Turkish coffee fortune-telling — tasseography — has been practiced for centuries across the Middle East, the Balkans, and Central Asia. Falora.AI is built with that tradition in mind. The AI doesn't make things up randomly; it draws on symbolic interpretation that has real cultural and historical roots.</p></div>
         </div>
         <div class="faq-item">
-          <button class="faq-question">What exactly is the "artifact"? What will I receive?<span class="faq-icon">+</span></button>
-          <div class="faq-answer"><p>After your reading, you'll receive a unique AI-generated visual — an image built from the symbols and themes in your fortune. You can download it immediately and print it yourself, or order a physical print through us. No two are the same.</p></div>
+          <button class="faq-question"><span data-i18n="q3">What exactly is the "artifact"? What will I receive?</span><span class="faq-icon">+</span></button>
+          <div class="faq-answer"><p data-i18n="a3">After your reading, you'll receive a unique AI-generated visual — an image built from the symbols and themes in your fortune. You can download it immediately and print it yourself, or order a physical print through us. No two are the same.</p></div>
         </div>
         <div class="faq-item">
-          <button class="faq-question">Can I do this alone, or is it better in a group?<span class="faq-icon">+</span></button>
-          <div class="faq-answer"><p>Both are real experiences. Solo readings tend to be more introspective — people use them for reflection, journaling prompts, or a quiet ritual moment. Group sessions are social and theatrical — the shared element of waiting for each other's fortunes creates genuine conversation. Try solo first, then bring friends.</p></div>
+          <button class="faq-question"><span data-i18n="q4">Can I do this alone, or is it better in a group?</span><span class="faq-icon">+</span></button>
+          <div class="faq-answer"><p data-i18n="a4">Both are real experiences. Solo readings tend to be more introspective — people use them for reflection, journaling prompts, or a quiet ritual moment. Group sessions are social and theatrical — the shared element of waiting for each other's fortunes creates genuine conversation. Try solo first, then bring friends.</p></div>
         </div>
         <div class="faq-item">
-          <button class="faq-question">I'm not particularly spiritual. Is this still for me?<span class="faq-icon">+</span></button>
-          <div class="faq-answer"><p>Yes. You don't have to believe in fortune-telling to enjoy Falora.AI. Many of our users are drawn to the cultural experience, the art, or the social ritual — not the prediction. Think of it the way you'd think of a tarot card reading at a party: you don't have to believe it to find it meaningful.</p></div>
+          <button class="faq-question"><span data-i18n="q5">I'm not particularly spiritual. Is this still for me?</span><span class="faq-icon">+</span></button>
+          <div class="faq-answer"><p data-i18n="a5">Yes. You don't have to believe in fortune-telling to enjoy Falora.AI. Many of our users are drawn to the cultural experience, the art, or the social ritual — not the prediction. Think of it the way you'd think of a tarot card reading at a party: you don't have to believe it to find it meaningful.</p></div>
         </div>
       </div>
     </div>
@@ -1141,13 +1066,13 @@
   <section id="final-cta">
     <div class="inner" style="position:relative; z-index:1;">
       <span class="cta-ornament fade-up">☕</span>
-      <span class="section-label fade-up">Begin Your Ritual</span>
-      <h2 class="fade-up">The cup is ready.<br>Are you?</h2>
-      <p class="cta-tagline fade-up">"Your fortune, written in coffee grounds."</p>
-      <p class="cta-body fade-up">Your fortune is already written in the grounds. It takes less than five minutes — and leaves you with something to keep forever.</p>
+      <span class="section-label fade-up" data-i18n="cta_label">Begin Your Ritual</span>
+      <h2 class="fade-up" data-i18n="cta_h2">The cup is ready.<br>Are you?</h2>
+      <p class="cta-tagline fade-up" data-i18n="cta_tagline">"Your fortune, written in coffee grounds."</p>
+      <p class="cta-body fade-up" data-i18n="cta_body">Your fortune is already written in the grounds. It takes less than five minutes — and leaves you with something to keep forever.</p>
       <div class="hero-ctas fade-up">
-        <a class="btn-primary" href="#pricing">Read My Fortune</a>
-        <a class="btn-ghost" href="#proof">Explore Group Experiences →</a>
+        <a class="btn-primary" href="#pricing" data-i18n="cta_primary">Read My Fortune</a>
+        <a class="btn-ghost" href="#proof" data-i18n="cta_secondary">Explore Group Experiences →</a>
       </div>
     </div>
   </section>
@@ -1156,32 +1081,219 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-logo">Falora.AI</div>
-      <p class="footer-tagline">"Your fortune, written in coffee grounds."</p>
+      <p class="footer-tagline" data-i18n="footer_tag">"Your fortune, written in coffee grounds."</p>
       <div class="footer-links">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">Contact</a>
+        <a href="#" data-i18n="footer_privacy">Privacy</a>
+        <a href="#" data-i18n="footer_terms">Terms</a>
+        <a href="#" data-i18n="footer_contact">Contact</a>
       </div>
     </div>
-    <p class="footer-copy">© 2026 Falora.AI · A ritual reimagined.</p>
+    <p class="footer-copy" data-i18n="footer_copy">© 2026 Falora.AI · A ritual reimagined.</p>
   </footer>
 
   <script>
-    /* ── THEME TOGGLE ── */
-    const root  = document.documentElement;
-    const btn   = document.getElementById('themeToggle');
-    const label = document.getElementById('toggleLabel');
+    /* ── i18n ── */
+    const STRINGS = {
+      en: {
+        nav_why:     'Why Falora',
+        nav_stories: 'Stories',
+        nav_pricing: 'Pricing',
+        nav_faq:     'FAQ',
+        nav_cta:     'Read My Fortune',
+        hero_eyebrow:'Turkish Coffee Fortune · AI Visual Artifacts',
+        hero_h1:     'Your fortune, written in <em>coffee grounds.</em>',
+        hero_sub:    'For curious souls who crave ritual — turn your Turkish coffee reading into a personalized art piece you\'ll actually keep.',
+        cta_primary: 'Read My Fortune',
+        cta_secondary:'Explore Group Experiences →',
+        scroll:      'Scroll',
+        prob_label:  'Sound familiar?',
+        prob_h2:     'The moments that disappear.',
+        p1_h3:       'You love the ritual. You hate that it disappears.',
+        p1_p:        'You\'ve had your coffee read a dozen times — at your grandmother\'s table, at a friend\'s gathering, on a trip abroad. It meant something. Then the cup got washed. The moment vanished. Nothing to show for it.',
+        p2_h3:       'Group experiences are getting harder to pull off.',
+        p2_p:        'Getting people together used to be easy. Now everyone\'s tired of bars, bored of brunch, staring at their phones even when they\'re in the same room. You want something that actually makes people present.',
+        p3_h3:       'Mass-produced art doesn\'t feel like you.',
+        p3_p:        'You\'ve scrolled Etsy. You\'ve browsed galleries. Everything either looks like everyone else\'s apartment or costs as much as rent. You want something personal — something that has a story attached to it.',
+        sol_label:   'What Falora.AI gives you instead.',
+        sol_h2:      'The ritual, kept forever.',
+        b1_h3:       'Keep the moment forever.',
+        b1_p:        'Every reading generates a one-of-a-kind visual artifact — yours to print, frame, or share. The ritual lives on. The art starts a conversation.',
+        b2_h3:       'An experience everyone actually talks about.',
+        b2_p:        'Host a session solo or with your whole group. Falora.AI guides the ritual, delivers personalized fortunes to each person, and turns an ordinary evening into a memory people reference for months.',
+        b3_h3:       'Art that is genuinely, provably about you.',
+        b3_p:        'Your fortune. Your symbols. Your colors. AI-generated visuals built from your reading — not a template, not a filter. Something no one else has.',
+        proof_label: 'What people say.',
+        proof_h2:    'Stories from the cup.',
+        stat1:       'Readings completed',
+        stat2:       'Prints ordered',
+        stat3:       'Countries reached',
+        t1_text:     'I did this with eight friends after dinner. Everyone got quiet when their fortune came up — genuinely quiet. Then everyone talked for two hours. I don\'t know what you did but do not change it.',
+        t1_role:     'Istanbul · New York · London',
+        t2_text:     'I was skeptical. Then I saw my print. It\'s hanging in my living room. Three people have asked me where I bought it. I tell them it\'s mine — it\'s literally only mine.',
+        t2_role:     'The Artifact Keeper',
+        t3_text:     'It felt real. I know it\'s AI. I know that. But the symbols matched things I hadn\'t said out loud yet. I\'ve done it four times now.',
+        t3_role:     'The Spiritual Seeker',
+        band_text:   'Turkish coffee fortune-telling — tasseography — practiced for centuries. <span>Now preserved forever.</span>',
+        price_label: 'Choose your ritual.',
+        price_h2:    'Simple, honest pricing.',
+        plan1_name:  'The Reading',
+        plan1_tag:   'Your fortune. One session, one artifact, yours to download and print anywhere.',
+        per_session: '/ session',
+        f1_1: 'Personalized AI fortune reading',
+        f1_2: 'One unique digital artifact',
+        f1_3: 'High-res download (print-ready)',
+        f1_4: 'Instant delivery',
+        btn1:        'Begin Reading',
+        badge:       'Most Popular',
+        plan2_name:  'The Gathering',
+        plan2_tag:   'For groups of up to 6. Everyone gets their own reading and artifact — perfect for a dinner party, birthday, or date night.',
+        per_group:   '/ group',
+        f2_1: 'Up to 6 individual readings',
+        f2_2: '6 unique digital artifacts',
+        f2_3: 'Guided group ritual flow',
+        f2_4: 'Shared gallery to compare fortunes',
+        f2_5: 'Host mode included',
+        btn2:        'Host a Gathering',
+        plan3_name:  'The Keepsake',
+        plan3_tag:   'Your reading, your artifact, delivered to your door. Premium print on archival paper, ready to frame.',
+        per_print:   '/ session + print',
+        f3_1: 'Full personalized reading',
+        f3_2: 'Museum-quality archival print',
+        f3_3: 'Ships in premium packaging',
+        f3_4: 'Certificate of uniqueness',
+        f3_5: 'Free digital copy included',
+        btn3:        'Order a Keepsake',
+        faq_label:   'Questions before you begin.',
+        faq_h2:      'Everything you\'re wondering.',
+        q1: 'Do I need to know anything about Turkish coffee or fortune-telling?',
+        a1: 'Not a thing. Falora.AI walks you through the ritual step by step — whether it\'s your first time or your hundredth. All you need is curiosity (and ideally, a cup of coffee).',
+        q2: 'Is this just a novelty, or is there real cultural grounding here?',
+        a2: 'Turkish coffee fortune-telling — tasseography — has been practiced for centuries across the Middle East, the Balkans, and Central Asia. Falora.AI is built with that tradition in mind. The AI doesn\'t make things up randomly; it draws on symbolic interpretation that has real cultural and historical roots.',
+        q3: 'What exactly is the "artifact"? What will I receive?',
+        a3: 'After your reading, you\'ll receive a unique AI-generated visual — an image built from the symbols and themes in your fortune. You can download it immediately and print it yourself, or order a physical print through us. No two are the same.',
+        q4: 'Can I do this alone, or is it better in a group?',
+        a4: 'Both are real experiences. Solo readings tend to be more introspective — people use them for reflection, journaling prompts, or a quiet ritual moment. Group sessions are social and theatrical — the shared element of waiting for each other\'s fortunes creates genuine conversation. Try solo first, then bring friends.',
+        q5: 'I\'m not particularly spiritual. Is this still for me?',
+        a5: 'Yes. You don\'t have to believe in fortune-telling to enjoy Falora.AI. Many of our users are drawn to the cultural experience, the art, or the social ritual — not the prediction. Think of it the way you\'d think of a tarot card reading at a party: you don\'t have to believe it to find it meaningful.',
+        cta_label:   'Begin Your Ritual',
+        cta_h2:      'The cup is ready.<br>Are you?',
+        cta_tagline: '"Your fortune, written in coffee grounds."',
+        cta_body:    'Your fortune is already written in the grounds. It takes less than five minutes — and leaves you with something to keep forever.',
+        footer_tag:  '"Your fortune, written in coffee grounds."',
+        footer_privacy: 'Privacy',
+        footer_terms:   'Terms',
+        footer_contact: 'Contact',
+        footer_copy: '© 2026 Falora.AI · A ritual reimagined.',
+      },
+      tr: {
+        nav_why:     'Neden Falora',
+        nav_stories: 'Hikayeler',
+        nav_pricing: 'Fiyatlar',
+        nav_faq:     'SSS',
+        nav_cta:     'Falıma Bak',
+        hero_eyebrow:'Türk Kahvesi Falı · Yapay Zeka Eserleri',
+        hero_h1:     'Kaderiniz, <em>telvede yazılı.</em>',
+        hero_sub:    'Ritüele susamış meraklı ruhlar için — Türk kahvesi falınızı gerçekten saklayacağınız kişisel bir sanat eserine dönüştürün.',
+        cta_primary: 'Falıma Bak',
+        cta_secondary:'Grup Deneyimlerini Keşfet →',
+        scroll:      'Kaydır',
+        prob_label:  'Tanıdık geliyor mu?',
+        prob_h2:     'Yok olan anlar.',
+        p1_h3:       'Ritüeli seviyorsunuz. Yok olup gitmesinden nefret ediyorsunuz.',
+        p1_p:        'Kahvenizi onlarca kez okuttunuz — büyükannenizin sofrasında, bir arkadaş buluşmasında, yurt dışı bir seyahatte. Bir anlamı vardı. Sonra fincan yıkandı. An geçti gitti. Geriye hiçbir şey kalmadı.',
+        p2_h3:       'Grup deneyimleri giderek zorlaşıyor.',
+        p2_p:        'İnsanları bir araya getirmek eskiden kolaydı. Şimdi herkes barlardan bıktı, brunchtan sıkıldı, aynı odada olsalar bile telefonlarına bakıyor. İnsanları gerçekten anda tutan bir şey istiyorsunuz.',
+        p3_h3:       'Seri üretim sanat size özgü hissettirmiyor.',
+        p3_p:        'Etsy\'yi kaydırdınız. Galerileri gezdiniz. Her şey ya herkesin evine benziyor ya da kira kadar pahalı. Kişisel bir şey istiyorsunuz — arkasında bir hikayesi olan bir şey.',
+        sol_label:   'Falora.AI bunun yerine size ne veriyor.',
+        sol_h2:      'Ritüel, sonsuza dek.',
+        b1_h3:       'Anı sonsuza dek saklayın.',
+        b1_p:        'Her okuma eşsiz bir görsel eser üretiyor — yazdırın, çerçeveleyin veya paylaşın. Ritüel yaşamaya devam ediyor. Sanat bir sohbet başlatıyor.',
+        b2_h3:       'Herkesin gerçekten konuştuğu bir deneyim.',
+        b2_p:        'Yalnız veya tüm grubunuzla bir seans düzenleyin. Falora.AI ritüele rehberlik eder, herkese kişisel fal sunar ve sıradan bir akşamı aylarca anılan bir anıya dönüştürür.',
+        b3_h3:       'Gerçekten ve kanıtlanabilir şekilde size ait sanat.',
+        b3_p:        'Sizin falınız. Sizin sembolleriniz. Sizin renkleriniz. Okumanızdan üretilen yapay zeka görselleri — şablon değil, filtre değil. Başka hiç kimsenin sahip olmadığı bir şey.',
+        proof_label: 'İnsanlar ne diyor.',
+        proof_h2:    'Fincanın hikayeleri.',
+        stat1:       'Tamamlanan okuma',
+        stat2:       'Sipariş edilen baskı',
+        stat3:       'Ulaşılan ülke',
+        t1_text:     'Bunu sekiz arkadaşımla akşam yemeğinden sonra yaptım. Herkesin falı geldiğinde sessizleşti — gerçekten sessizleşti. Sonra iki saat konuştuk. Ne yaptığınızı bilmiyorum ama değiştirmeyin.',
+        t1_role:     'İstanbul · New York · Londra',
+        t2_text:     'Şüpheciydim. Sonra baskımı gördüm. Oturma odamda asılı duruyor. Üç kişi nereden aldığımı sordu. Benim, sadece benim olduğunu söylüyorum.',
+        t2_role:     'Eser Koleksiyoncusu',
+        t3_text:     'Gerçek hissettirdi. Yapay zeka olduğunu biliyorum. Biliyorum. Ama semboller henüz sesli söylemediğim şeylerle örtüştü. Şimdiye kadar dört kez yaptım.',
+        t3_role:     'Spiritüel Arayışçı',
+        band_text:   'Türk kahvesi falı — tasseografi — yüzyıllardır uygulanıyor. <span>Artık sonsuza dek korunuyor.</span>',
+        price_label: 'Ritüelinizi seçin.',
+        price_h2:    'Sade ve dürüst fiyatlandırma.',
+        plan1_name:  'Okuma',
+        plan1_tag:   'Falınız. Tek seans, tek eser — istediğiniz yerde indirip yazdırın.',
+        per_session: '/ seans',
+        f1_1: 'Kişisel yapay zeka falı',
+        f1_2: 'Eşsiz dijital eser',
+        f1_3: 'Yüksek çözünürlüklü indirme',
+        f1_4: 'Anında teslimat',
+        btn1:        'Okumaya Başla',
+        badge:       'En Popüler',
+        plan2_name:  'Buluşma',
+        plan2_tag:   '6 kişiye kadar gruplar için. Herkes kendi falını ve eserini alır — akşam yemeği, doğum günü veya çift gecesi için mükemmel.',
+        per_group:   '/ grup',
+        f2_1: '6 kişiye kadar bireysel okuma',
+        f2_2: '6 eşsiz dijital eser',
+        f2_3: 'Rehberli grup ritüeli',
+        f2_4: 'Falları karşılaştırmak için paylaşılan galeri',
+        f2_5: 'Ev sahibi modu dahil',
+        btn2:        'Buluşma Düzenle',
+        plan3_name:  'Hatıra',
+        plan3_tag:   'Falınız ve eseriniz kapınıza gelsin. Arşiv kağıdına premium baskı, çerçevelemeye hazır.',
+        per_print:   '/ seans + baskı',
+        f3_1: 'Tam kişisel okuma',
+        f3_2: 'Müze kalitesinde arşiv baskısı',
+        f3_3: 'Premium ambalajla gönderim',
+        f3_4: 'Benzersizlik sertifikası',
+        f3_5: 'Ücretsiz dijital kopya dahil',
+        btn3:        'Hatıra Sipariş Et',
+        faq_label:   'Başlamadan önce sorular.',
+        faq_h2:      'Merak ettiğiniz her şey.',
+        q1: 'Türk kahvesi veya falcılık hakkında bir şey bilmem gerekiyor mu?',
+        a1: 'Hiç. Falora.AI sizi ritüelde adım adım yönlendiriyor — ister ilk kez ister yüzüncü kez olsun. Tek ihtiyacınız merak (ve tercihen bir fincan kahve).',
+        q2: 'Bu sadece bir eğlence mi, yoksa gerçek bir kültürel temeli var mı?',
+        a2: 'Türk kahvesi falı — tasseografi — yüzyıllardır Orta Doğu, Balkanlar ve Orta Asya\'da uygulanıyor. Falora.AI bu geleneği göz önünde bulundurarak geliştirildi. Yapay zeka rastgele şeyler üretmiyor; gerçek kültürel ve tarihsel köklere sahip sembolik yorumlara dayanıyor.',
+        q3: '"Eser" tam olarak nedir? Ne alacağım?',
+        a3: 'Okumanızdan sonra eşsiz bir yapay zeka görseli alacaksınız — falınızdaki sembol ve temalardan oluşturulan bir imge. Hemen indirebilir ve kendiniz yazdırabilirsiniz ya da bizden fiziksel baskı sipariş edebilirsiniz. İkisi birbirinin aynı olmaz.',
+        q4: 'Bunu yalnız mı yapmalıyım, yoksa grup halinde mi daha iyi?',
+        a4: 'Her ikisi de gerçek deneyimler. Yalnız okumalar daha içe dönük oluyor — insanlar bunları yansıma, günlük ipuçları veya sessiz bir ritüel anı için kullanıyor. Grup seansları sosyal ve teatral — herkesin birbirinin falını beklemesi gerçek bir sohbet yaratıyor. Önce yalnız deneyin, sonra arkadaşlarınızı getirin.',
+        q5: 'Çok spiritüel biri değilim. Bu benim için de geçerli mi?',
+        a5: 'Evet. Falora.AI\'yi keyifle kullanmak için falcılığa inanmanıza gerek yok. Kullanıcılarımızın çoğu kültürel deneyime, sanata veya sosyal ritüele ilgi duyuyor — kehânete değil. Bunu bir partide tarot okuma gibi düşünün: inanmasanız da anlamlı bulabilirsiniz.',
+        cta_label:   'Ritüelinizi Başlatın',
+        cta_h2:      'Fincan hazır.<br>Siz hazır mısınız?',
+        cta_tagline: '"Kaderiniz, telvede yazılı."',
+        cta_body:    'Falınız telvede zaten yazılı. Beş dakikadan az sürer — ve sonunda sonsuza dek saklayacağınız bir şeyle ayrılırsınız.',
+        footer_tag:  '"Kaderiniz, telvede yazılı."',
+        footer_privacy: 'Gizlilik',
+        footer_terms:   'Koşullar',
+        footer_contact: 'İletişim',
+        footer_copy: '© 2026 Falora.AI · Yeniden hayal edilen bir ritüel.',
+      }
+    };
 
-    const saved = localStorage.getItem('falora-theme') || 'dark';
-    root.setAttribute('data-theme', saved);
-    label.textContent = saved === 'dark' ? 'Dark' : 'Light';
+    let currentLang = localStorage.getItem('falora-lang') || 'en';
 
-    btn.addEventListener('click', () => {
-      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      label.textContent = next === 'dark' ? 'Dark' : 'Light';
-      localStorage.setItem('falora-theme', next);
-    });
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('falora-lang', lang);
+      document.documentElement.lang = lang;
+      document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+      document.getElementById('lang-tr').classList.toggle('active', lang === 'tr');
+      const s = STRINGS[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (s[key] !== undefined) el.innerHTML = s[key];
+      });
+    }
+
+    setLang(currentLang);
 
     /* ── MOBILE NAV ── */
     const hamburger = document.getElementById('hamburger');
@@ -1201,105 +1313,131 @@
       }
     })();
 
-    /* ── HERO CANVAS ── */
+    /* ── HERO CANVAS — organic cells ── */
     (function() {
       const canvas = document.getElementById('coffeeCanvas');
-      const ctx = canvas.getContext('2d');
+      const ctx    = canvas.getContext('2d');
       const W = canvas.width, H = canvas.height, CX = W/2, CY = H/2;
 
       function lcg(seed) {
         let s = seed >>> 0;
         return () => { s = (Math.imul(s,1664525)+1013904223)>>>0; return s/4294967295; };
       }
+      const rng = lcg(137);
 
-      const r = lcg(77);
-      const particles = Array.from({length: 180}, () => ({
-        bx: CX + (r()-0.5)*W*0.86, by: CY + (r()-0.5)*H*0.86,
-        sz: 3 + r()*14, spd: 0.04 + r()*0.16, ph: r()*Math.PI*2,
+      /* ── Cell definitions ── */
+      const CELLS = [
+        /* large background blobs */
+        { bx: CX-60,  by: CY+20,  R: 145, hue: 285, sat: 65, lit: 12, alpha: 0.82, layer: 0 },
+        { bx: CX+70,  by: CY-50,  R: 120, hue: 300, sat: 70, lit: 16, alpha: 0.70, layer: 0 },
+        { bx: CX-20,  by: CY+90,  R: 100, hue: 270, sat: 60, lit: 10, alpha: 0.75, layer: 0 },
+        /* mid blobs — bright magenta */
+        { bx: CX+30,  by: CY+30,  R: 80,  hue: 308, sat: 85, lit: 38, alpha: 0.60, layer: 1 },
+        { bx: CX-80,  by: CY-60,  R: 70,  hue: 290, sat: 80, lit: 30, alpha: 0.55, layer: 1 },
+        { bx: CX+90,  by: CY+70,  R: 60,  hue: 315, sat: 90, lit: 42, alpha: 0.50, layer: 1 },
+        { bx: CX-40,  by: CY-100, R: 55,  hue: 278, sat: 75, lit: 28, alpha: 0.60, layer: 1 },
+        /* small dark nuclei */
+        { bx: CX+10,  by: CY-20,  R: 38,  hue: 280, sat: 50, lit:  6, alpha: 0.90, layer: 2 },
+        { bx: CX-55,  by: CY+55,  R: 28,  hue: 295, sat: 55, lit:  8, alpha: 0.85, layer: 2 },
+        { bx: CX+80,  by: CY-30,  R: 22,  hue: 268, sat: 45, lit:  5, alpha: 0.88, layer: 2 },
+        /* bright accent spots */
+        { bx: CX-20,  by: CY+10,  R: 18,  hue: 316, sat: 95, lit: 58, alpha: 0.70, layer: 3 },
+        { bx: CX+50,  by: CY+50,  R: 14,  hue: 302, sat: 90, lit: 52, alpha: 0.65, layer: 3 },
+      ].map(c => ({
+        ...c,
+        /* random per-cell motion + morph params */
+        mx1: (rng()-0.5)*0.55, my1: (rng()-0.5)*0.55,
+        mx2: (rng()-0.5)*0.28, my2: (rng()-0.5)*0.28,
+        ph1: rng()*Math.PI*2,  ph2: rng()*Math.PI*2,
+        pulseSpd: 0.3 + rng()*0.5, pulsePh: rng()*Math.PI*2, pulseAmp: 0.08 + rng()*0.12,
+        /* shape distortion — 3 harmonic layers */
+        sh: [
+          { n: 2+Math.floor(rng()*2), amp: 0.14+rng()*0.18, ph: rng()*Math.PI*2, spd: 0.25+rng()*0.35 },
+          { n: 3+Math.floor(rng()*3), amp: 0.07+rng()*0.10, ph: rng()*Math.PI*2, spd: 0.45+rng()*0.55 },
+          { n: 5+Math.floor(rng()*4), amp: 0.03+rng()*0.05, ph: rng()*Math.PI*2, spd: 0.80+rng()*0.90 },
+        ],
       }));
 
-      const rings = Array.from({length: 11}, (_, i) => {
-        const f = i/10;
-        return { baseR: 16+f*W*0.44, f1: 2+Math.floor(r()*3), f2: 5+Math.floor(r()*4),
-          a1: 7-f*4, a2: 3.5-f*2, ph: r()*Math.PI*2, lw: 0.5+f*1.5, f };
-      });
+      /* ── Draw one organic cell ── */
+      function drawCell(cell, t) {
+        /* drifting center */
+        const cx = cell.bx + Math.sin(t*cell.mx1 + cell.ph1)*32 + Math.sin(t*cell.mx2 + cell.ph2)*16;
+        const cy = cell.by + Math.cos(t*cell.my1 + cell.ph1+1)*32 + Math.cos(t*cell.my2 + cell.ph2+1)*16;
 
-      function isDark() { return document.documentElement.getAttribute('data-theme') !== 'light'; }
+        /* pulsing base radius */
+        const R = cell.R * (1 + Math.sin(t*cell.pulseSpd + cell.pulsePh)*cell.pulseAmp);
+
+        /* build organic outline with smooth bezier midpoints */
+        const N = 72;
+        const pts = [];
+        for (let i = 0; i < N; i++) {
+          const theta = (i / N) * Math.PI * 2;
+          let r = R;
+          for (const s of cell.sh) r += R * s.amp * Math.sin(s.n * theta + s.ph + t * s.spd);
+          pts.push([cx + Math.cos(theta)*r, cy + Math.sin(theta)*r]);
+        }
+
+        ctx.beginPath();
+        for (let i = 0; i < N; i++) {
+          const [x0, y0] = pts[i];
+          const [x1, y1] = pts[(i+1) % N];
+          const mx = (x0+x1)/2, my = (y0+y1)/2;
+          i === 0 ? ctx.moveTo(mx, my) : ctx.quadraticCurveTo(x0, y0, mx, my);
+        }
+        ctx.closePath();
+
+        /* radial gradient fill */
+        const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, R*1.25);
+        grd.addColorStop(0,   `hsla(${cell.hue},${cell.sat}%,${Math.min(cell.lit*2.2,70)}%,${cell.alpha})`);
+        grd.addColorStop(0.45,`hsla(${cell.hue},${cell.sat}%,${cell.lit}%,${cell.alpha*0.9})`);
+        grd.addColorStop(1,   `hsla(${cell.hue},${cell.sat}%,${cell.lit*0.5}%,0)`);
+        ctx.fillStyle = grd;
+        ctx.fill();
+      }
+
+      /* ── Tendril / thread between two points ── */
+      function drawTendril(x1,y1,x2,y2,t,ph) {
+        const mx = (x1+x2)/2 + Math.sin(t*0.4+ph)*22;
+        const my = (y1+y2)/2 + Math.cos(t*0.3+ph)*22;
+        ctx.beginPath();
+        ctx.moveTo(x1,y1);
+        ctx.quadraticCurveTo(mx,my,x2,y2);
+        const al = 0.12 + 0.08*Math.sin(t*0.6+ph);
+        ctx.strokeStyle = `rgba(120,0,160,${al})`;
+        ctx.lineWidth = 0.8 + Math.sin(t*0.5+ph)*0.4;
+        ctx.stroke();
+      }
 
       let T0 = null;
       function frame(ts) {
         if (!T0) T0 = ts;
         const t = (ts - T0) / 1000;
-        const dark = isDark();
 
-        ctx.clearRect(0,0,W,H);
+        /* clear to transparent — no background */
+        ctx.clearRect(0, 0, W, H);
 
-        /* Cup */
-        const cup = ctx.createRadialGradient(CX, CY*0.92, 0, CX, CY, W*0.50);
-        if (dark) {
-          cup.addColorStop(0, 'rgba(13,8,30,0.96)');
-          cup.addColorStop(0.65, 'rgba(8,5,20,0.94)');
-        } else {
-          cup.addColorStop(0, 'rgba(237,233,255,0.96)');
-          cup.addColorStop(0.65, 'rgba(220,215,255,0.90)');
+        /* layer 0 — large dark blobs */
+        CELLS.filter(c => c.layer === 0).forEach(c => drawCell(c, t));
+
+        /* tendrils between select cells */
+        const L0 = CELLS.filter(c => c.layer === 0);
+        for (let i = 0; i < L0.length-1; i++) {
+          const a = L0[i], b = L0[i+1];
+          const ax = a.bx + Math.sin(t*a.mx1+a.ph1)*24;
+          const ay = a.by + Math.cos(t*a.my1+a.ph1)*24;
+          const bx = b.bx + Math.sin(t*b.mx1+b.ph1)*24;
+          const by = b.by + Math.cos(t*b.my1+b.ph1)*24;
+          drawTendril(ax, ay, bx, by, t, i*1.3);
         }
-        cup.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = cup;
-        ctx.beginPath(); ctx.arc(CX, CY, W*0.50, 0, Math.PI*2); ctx.fill();
 
-        /* Particles */
-        particles.forEach(p => {
-          const x = p.bx + Math.sin(t*p.spd + p.ph)*9;
-          const y = p.by + Math.cos(t*p.spd*0.8 + p.ph+1)*9;
-          const dist = Math.hypot(x-CX, y-CY);
-          const fade = Math.max(0, 1 - dist/(W*0.48));
-          if (fade < 0.02) return;
-          const grd = ctx.createRadialGradient(x,y,0, x,y,p.sz);
-          if (dark) {
-            grd.addColorStop(0,   `rgba(147,51,234,${0.7*fade})`);
-            grd.addColorStop(0.5, `rgba(30,27,75,${0.5*fade})`);
-          } else {
-            grd.addColorStop(0,   `rgba(124,58,237,${0.55*fade})`);
-            grd.addColorStop(0.5, `rgba(167,139,250,${0.3*fade})`);
-          }
-          grd.addColorStop(1, 'transparent');
-          ctx.fillStyle = grd;
-          ctx.beginPath(); ctx.arc(x, y, p.sz, 0, Math.PI*2); ctx.fill();
-        });
+        /* layer 1 — mid magenta blobs */
+        CELLS.filter(c => c.layer === 1).forEach(c => drawCell(c, t));
 
-        /* Rings */
-        rings.forEach((rg, i) => {
-          const breathe = Math.sin(t*0.5 + rg.ph)*5;
-          ctx.beginPath();
-          for (let j = 0; j <= 220; j++) {
-            const a = (j/220)*Math.PI*2;
-            const pr = Math.sin(a*rg.f1 + t*0.32 + rg.ph)*rg.a1
-                     + Math.sin(a*rg.f2 - t*0.20 + rg.ph*1.4)*rg.a2;
-            const radius = rg.baseR + breathe + pr;
-            const x = CX + Math.cos(a)*radius, y = CY + Math.sin(a)*radius;
-            j === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
-          }
-          ctx.closePath();
-          const al = (0.12 + rg.f*0.42) * (0.65 + 0.35*Math.sin(t*0.42+i));
-          const lit = dark ? `${40+rg.f*35}%` : `${35+rg.f*25}%`;
-          ctx.strokeStyle = `hsla(271,70%,${lit},${al})`;
-          ctx.lineWidth = rg.lw; ctx.stroke();
-        });
+        /* layer 2 — dark nuclei */
+        CELLS.filter(c => c.layer === 2).forEach(c => drawCell(c, t));
 
-        /* Vignette */
-        const vig = ctx.createRadialGradient(CX, CY, W*0.24, CX, CY, W*0.52);
-        vig.addColorStop(0, 'transparent');
-        vig.addColorStop(1, dark ? 'rgba(4,2,12,0.75)' : 'rgba(230,225,255,0.6)');
-        ctx.fillStyle = vig;
-        ctx.beginPath(); ctx.arc(CX, CY, W*0.52, 0, Math.PI*2); ctx.fill();
-
-        /* Glow */
-        const glow = ctx.createRadialGradient(CX, CY*0.8, 0, CX, CY, W*0.48);
-        const ga = 0.05 + 0.03*Math.sin(t*1.1);
-        glow.addColorStop(0, `rgba(147,51,234,${ga})`);
-        glow.addColorStop(1, 'transparent');
-        ctx.fillStyle = glow;
-        ctx.beginPath(); ctx.arc(CX, CY, W*0.52, 0, Math.PI*2); ctx.fill();
+        /* layer 3 — bright accent spots */
+        CELLS.filter(c => c.layer === 3).forEach(c => drawCell(c, t));
 
         requestAnimationFrame(frame);
       }
@@ -1317,7 +1455,6 @@
 
     /* ── SCROLL FADE-IN ── */
     const fadeEls = document.querySelectorAll('.fade-up');
-
     const observer = new IntersectionObserver(entries => {
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
@@ -1326,13 +1463,8 @@
         }
       });
     }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
-
     fadeEls.forEach(el => observer.observe(el));
-
-    /* Hard fallback: reveal everything after 1.2s in case observer doesn't fire */
-    setTimeout(() => {
-      fadeEls.forEach(el => el.classList.add('visible'));
-    }, 1200);
+    setTimeout(() => fadeEls.forEach(el => el.classList.add('visible')), 1200);
   </script>
 </body>
 </html>
